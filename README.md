@@ -29,7 +29,7 @@ possible Usage:
 3. API key should be added to request header of each API call:
 
 ```
-X-API-Key: <YOAR_API_KEY>
+X-API-Key: <YOUR_API_KEY>
 ```
 
 ## Getting started 
@@ -43,6 +43,7 @@ This document contains plain HTTP examples, to allow developers choose their fav
 ```
 POST /zira-client/post HTTP/1.1
 Host: api.zira.us
+X-API-Key: aa54d7a9-6dd0-5ab2-9834-21ccb953c060
 Content-Type: application/json
 Content-Length: 86
 
@@ -54,11 +55,11 @@ Content-Length: 86
 ```
 ### Payload:
 
-| Property    | Required | Default | Type        | Description                     |
-| ----------- | -------- | ------- | ----------- | ------------------------------- |
-| toChannelId | true     |         |             |                                 |
-| postTypeId  | true     |         | ["1", "15"] | "1": Ordinary post, "15": Alert |
-| content     | true     |         |             |                                 |
+| Property    | Required | Default | Type   | Options     | Description                     |
+| ----------- | -------- | ------- | ------ | ----------- | ------------------------------- |
+| toChannelId | true     |         | String |             |                                 |
+| postTypeId  | true     |         | String | ["1", "15"] | "1": Ordinary post, "15": Alert |
+| content     | true     |         | String |             |                                 |
 
 ### Response:
 
