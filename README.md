@@ -40,7 +40,7 @@ X-API-Key: <YOAR_API_KEY>
 This document contains plain HTTP examples, to allow developers choose their favorite code language. 
 
 
-1. create new post on zira channel
+## create new post on zira channel
 
 ### Example:
 ```
