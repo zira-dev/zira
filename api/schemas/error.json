@@ -1,0 +1,17 @@
+{
+    "type": "object",
+    "required": [
+        "message",
+        "internalErrorCode"
+    ],
+    "properties": {
+      "message": {
+        "type": "integer",
+        "example": "Internal server error."
+      },
+      "internalErrorCode": {
+        "type": "string",
+        "example": "02-001"
+      }
+    }
+  }

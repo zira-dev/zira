@@ -1,5 +1,5 @@
 
-![zira](zira-repo-image.png)
+![zira](images/zira-repo-image.png)
 ## Overview
 This repository contains documentation, examples and code snippets for using zira public APIs in order to create custom zira applications
 or integrate zira data with BI tools or operational applications
@@ -22,17 +22,14 @@ possible Usage:
   - [API reference](API.md)
 
 ## Prerequisite
-In order to use zira public APIs, you must sign up to zira. 
-Once logged in to zira, create new application and generate API key.
-
-
-go to https://my.zira.us/applications > Add new application > enter application name > Generate api key
-
-the API key should be added to request header of each API call:
+1. In order to use zira public APIs, you must sign up to zira. 
+2. Once logged in to zira, create new application and generate API key.
+   Here's how:
+      go to https://my.zira.us/applications > Add new application > enter application name > Generate api key
+3. API key should be added to request header of each API call:
 
 ```
 X-API-Key: <YOAR_API_KEY>
-
 ```
 
 ## Getting started 
@@ -57,11 +54,11 @@ Content-Length: 86
 ```
 ### Payload:
 
-| property    | required | default | type            | Description                  |
-|-------------|----------|---------|-----------------|------------------------------|
-| toChannelId | true     | null    |                 |                              |
-| postTypeId  | true     | null    | ["1", "2", "3"] | "1": regular, "2": alert bad |
-|             |          |         |                 |                              |
+| Property    | Required | Default | Type        | Description                     |
+| ----------- | -------- | ------- | ----------- | ------------------------------- |
+| toChannelId | true     |         |             |                                 |
+| postTypeId  | true     |         | ["1", "15"] | "1": Ordinary post, "15": Alert |
+| content     | true     |         |             |                                 |
 
 ### Response:
 

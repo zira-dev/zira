@@ -1,0 +1,36 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "zira-client"
+  },
+  "servers": [
+    {
+      "url": "https://{environment}.zira.us",
+      "variables": {
+        "environment": {
+            "default": "api",
+            "enum": ["api", "integ.api"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/post": {
+        "$ref": "https://raw.githubusercontent.com/lightapp/zira-client/master/api/post.json"
+    }
+  },
+  "components": {
+    "securitySchemes": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "X-API-Key"
+        }
+    }
+  },
+  "security": [
+      {
+        "ApiKeyAuth": []
+    }]
+}

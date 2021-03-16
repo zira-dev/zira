@@ -1,0 +1,12 @@
+{
+    "type": "object",
+    "required": [
+        "data"
+    ],
+    "properties": {
+        "data": {
+            "type": "string",
+            "example": "1"
+        }
+    }
+}
