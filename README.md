@@ -55,11 +55,11 @@ Content-Length: 86
 ```
 ### Payload:
 
-| Property    | Required | Default | Type   | Options     | Description                     |
-| ----------- | -------- | ------- | ------ | ----------- | ------------------------------- |
-| toChannelId | true     |         | String |             |                                 |
-| postTypeId  | true     |         | String | ["1", "15"] | "1": Ordinary post, "15": Alert |
-| content     | true     |         | String |             |                                 |
+| Property    | Required | Default | Type             | Options     | Description                          |
+| ----------- | -------- | ------- | ---------------- | ----------- | ------------------------------------ |
+| toChannelId | true     |         | String (numeric) |             |                                      |
+| postTypeId  | true     |         | String (numeric) | ["1", "15"] | "1": Ordinary post, "15": Alert post |
+| content     | true     |         | String           |             |                                      |
 
 ### Response:
 
