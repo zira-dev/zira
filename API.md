@@ -13,11 +13,13 @@
   - [Response:](#response-3)
   - [3. Upload](#3-upload)
 - [Export CSV](#export-csv)
+  - [Parameters:](#parameters-1)
+  - [Response:](#response-4)
 - [Get normalized data](#get-normalized-data)
 - [Get aggregated data](#get-aggregated-data)
 - [Create post](#create-post)
   - [Payload:](#payload-2)
-  - [Response:](#response-4)
+  - [Response:](#response-5)
 - [Create/Edit task](#createedit-task)
   
 
@@ -28,22 +30,22 @@ Use this one to add device readings manually.
 POST /meters-data/reading HTTP/1.1
 Host: integ.api.zira.us
 Content-Type: application/json
-X-API-Key: aa54d7a9-6dd0-5ab2-9834-21ccb953c060
-Content-Length: 93
+X-API-Key: <API_KEY>
+Content-Length: <CONTENT_LENGTH>
 
 [{
-	"meterId":"455",
-	"timestamp": "2019-12-10T19:32:00",
-	"values": [1, 2, 1, 2, 1.3, 3]
+	"meterId": <METER_ID>,
+	"timestamp": <TIME_STAMP>,
+	"values": <VALUES_ARRAY>
 }]
 ```
 ### Payload:
 
-| Property  | Required | Default | Type             | Options | Description                                                                                                                                                                                                                                  |
-| --------- | -------- | ------- | ---------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| meterId   | true     |         | String (numeric) |         | <p>meterId represents an ID of the device in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p>                                  |
-| timestamp | true     |         | String           |         | <p>Date and time of the reading. Please use ISO 8601 standard<br>Note there's no timezone, assuming it's the timezone of the site.</p>                                                                                                       |
-| values    | true     |         | Array            |         | <p>Array of reading values. The order is according to the schema of device.<br>For example, if you have a power meter, configured with two metrics - Current(Amps) and Voltage(Volts), you'll have to pass [<AMPS_VALUE>, <VOLTS_VALUE>]</p> |
+| Property  | Required | Default | Type             | Format                | Options | Description                                                                                                                                                                                                                                  |
+| --------- | -------- | ------- | ---------------- | --------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| meterId   | true     |         | String (numeric) | "1234"                |         | <p>meterId represents an ID of the device in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p>                                  |
+| timestamp | true     |         | String           | "2021-01-21T19:32:00" |         | <p>Date and time of the reading. Please use ISO 8601 standard<br>Note there's no timezone, assuming it's the timezone of the site.</p>                                                                                                       |
+| values    | true     |         | Array            | [1.23, 110]           |         | <p>Array of reading values. The order is according to the schema of device.<br>For example, if you have a power meter, configured with two metrics - Current(Amps) and Voltage(Volts), you'll have to pass [<AMPS_VALUE>, <VOLTS_VALUE>]</p> |
 
 ### Response:
 
@@ -65,9 +67,9 @@ Content-Length: 93
 ```
 POST /zira-client/event HTTP/1.1
 Host: api.zira.us
-X-API-Key: aa54d7a9-6dd0-5ab2-9834-21ccb953c060
+X-API-Key: <API_KEY>
 Content-Type: application/json
-Content-Length: 277
+Content-Length: <CONTENT_LENGTH>
 
 {
     "eventGroupId": "5",
@@ -116,14 +118,14 @@ There are 3 steps to import CSV file with your readings.
 This will give you a list of column names of the CSV file. 
 
 ```
-GET /zira-client/reading/template?meterId=4027 HTTP/1.1
+GET /zira-client/reading/template?meterId=<METER_ID> HTTP/1.1
 Host: api.zira.us
-X-API-Key: aa54d7a9-6dd0-5ab2-9834-21ccb953c060
+X-API-Key: <API_KEY>
 ```
 ### Parameters:
-| Property | Required | Default | Type    | Options | Description                                                                                                                                                                                                 |
-| -------- | -------- | ------- | ------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| meterId  | true     |         | Integer |         | <p>meterId represents an ID of the device in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p> |
+| Property | Required | Default | Type    | Format | Options | Description                                                                                                                                                                                                 |
+| -------- | -------- | ------- | ------- | ------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| meterId  | true     |         | Integer | "1234" |         | <p>meterId represents an ID of the device in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p> |
 
 ### Response:
 
@@ -143,9 +145,9 @@ X-API-Key: aa54d7a9-6dd0-5ab2-9834-21ccb953c060
 
 ### 2. Getting signed URL for Upload
 ```
-GET /zira-client/reading/import?meterId=4027 HTTP/1.1
+GET /zira-client/reading/import?meterId=<METER_ID> HTTP/1.1
 Host: api.zira.us
-X-API-Key: aa54d7a9-6dd0-5ab2-9834-21ccb953c060
+X-API-Key: <API_KEY>
 ```
 
 ### Response:
@@ -185,29 +187,57 @@ HTTP/1.1 200 OK
 HTTP/1.1 <HTTP_ERROR_CODE>
 ```
 ## Export CSV
+```
+GET /meters-data/export/?meterId=<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
+Host: integ.api.zira.us
+X-API-Key: <API_KEY>
+```
+### Parameters:
+| Property  | Required | Default | Type               | Format              | Options | Description                                                                                                                                                                                                 |
+| --------- | -------- | ------- | ------------------ | ------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| meterId   | true     |         | Integer            | 1234                |         | <p>meterId represents an ID of the device in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p> |
+| startTime | true     |         | String (timestamp) | 2020-10-15T00:00:00 |         |
+| endTime   | true     |         | String (timestamp) | 2020-11-15T23:59:59 |         |
+
+### Response:
+**Succssfull response:**
+```
+{
+    "data": {
+        "fileUrl": "<DOWNLOAD_URL>"
+    }
+}
+```
+**Error response:**
+```
+{
+    "message": "<ERROR MESSAGE>",
+    "details": "<ERROR DETAILS>"
+}
+```
 ## Get normalized data
 ## Get aggregated data
 ## Create post
 ```
 POST /zira-client/post HTTP/1.1
 Host: api.zira.us
-X-API-Key: aa54d7a9-6dd0-5ab2-9834-21ccb953c060
+X-API-Key: <API_KEY>
 Content-Type: application/json
-Content-Length: 86
+Content-Length: <CONTENT_LENGTH>
 
 {
-    "postTypeId": "1",
-    "content": "Hello everyone!",
-    "toChannelId": "5218"
+    "postTypeId": <POST_TYPE_ID>,
+    "content": <CONTENT>,
+    "toChannelId": <CHANNEL_ID>
 }
 ```
 ### Payload:
 
-| Property    | Required | Default | Type             | Options     | Description                     |
-| ----------- | -------- | ------- | ---------------- | ----------- | ------------------------------- |
-| toChannelId | true     |         | String (numeric) |             |                                 |
-| postTypeId  | true     |         | String (numeric) | ["1", "15"] | "1": Ordinary post, "15": Alert |
-| content     | true     |         | String           |             |                                 |
+| Property    | Required | Default | Type             | Format            | Options     | Description                                                                                                                                                                           |
+| ----------- | -------- | ------- | ---------------- | ----------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| toChannelId | true     |         | String (numeric) | "1234"            |             | <p>To get channel ID, go to the desired chanel in the system and checkout the URL, the number at the end of the Path is the channel ID.<br>Example: https://my.zira.us/channels/1</p> |
+| postTypeId  | true     |         | String (numeric) | "1"               | ["1", "15"] | "1": Ordinary post, "15": Alert post                                                                                                                                                  |
+| content     | true     |         | String           | "Hello everyone!" |             |                                                                                                                                                                                       |
 
 ### Response:
 

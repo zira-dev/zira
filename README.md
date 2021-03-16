@@ -55,11 +55,11 @@ Content-Length: 86
 ```
 ### Payload:
 
-| Property    | Required | Default | Type             | Options     | Description                          |
-| ----------- | -------- | ------- | ---------------- | ----------- | ------------------------------------ |
-| toChannelId | true     |         | String (numeric) |             |                                      |
-| postTypeId  | true     |         | String (numeric) | ["1", "15"] | "1": Ordinary post, "15": Alert post |
-| content     | true     |         | String           |             |                                      |
+| Property    | Required | Default | Type             | Options     | Description                                                                                                                                                                           |
+| ----------- | -------- | ------- | ---------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| toChannelId | true     |         | String (numeric) |             | <p>To get channel ID, go to the desired chanel in the system and checkout the URL, the number at the end of the Path is the channel ID.<br>Example: https://my.zira.us/channels/1</p> |
+| postTypeId  | true     |         | String (numeric) | ["1", "15"] | "1": Ordinary post, "15": Alert post                                                                                                                                                  |
+| content     | true     |         | String           |             |                                                                                                                                                                                       |
 
 ### Response:
 
