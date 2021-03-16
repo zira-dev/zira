@@ -23,7 +23,9 @@ possible Usage:
 
 ## Prerequisite
 In order to use zira public APIs, you must sign up to zira. 
-Once logged in to zira, create new application and generate API key .
+Once logged in to zira, create new application and generate API key.
+
+
 go to https://my.zira.us/applications > Add new application > enter application name > Generate api key
 
 the API key should be added to request header of each API call:
@@ -40,6 +42,19 @@ This document contains plain HTTP examples, to allow developers choose their fav
 
 1. create new post on zira channel
 
+### Example:
+```
+POST /zira-client/post HTTP/1.1
+Host: api.zira.us
+Content-Type: application/json
+Content-Length: 86
+
+{
+    "postTypeId": "1",
+    "content": "Hello everyone!",
+    "toChannelId": "5218"
+}
+```
 ### Payload:
 
 | property    | required | default | type            | Description                  |
@@ -62,19 +77,5 @@ This document contains plain HTTP examples, to allow developers choose their fav
 {
     "message": "<ERROR MESSAGE>",
     "details": "<ERROR DETAILS>"
-}
-```
-
-### Example:
-```
-POST /zira-client/post HTTP/1.1
-Host: api.zira.us
-Content-Type: application/json
-Content-Length: 86
-
-{
-    "postTypeId": "1",
-    "content": "Hello everyone!",
-    "toChannelId": "5218"
 }
 ```
