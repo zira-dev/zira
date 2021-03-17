@@ -16,10 +16,12 @@
   - [Parameters:](#parameters-1)
   - [Response:](#response-4)
 - [Get normalized data](#get-normalized-data)
+  - [Parameters:](#parameters-2)
+  - [Response:](#response-5)
 - [Get aggregated data](#get-aggregated-data)
 - [Create post](#create-post)
   - [Payload:](#payload-2)
-  - [Response:](#response-5)
+  - [Response:](#response-6)
 - [Create/Edit task](#createedit-task)
   
 
@@ -193,7 +195,7 @@ Host: integ.api.zira.us
 X-API-Key: <API_KEY>
 ```
 ### Parameters:
-| Property  | Required | Default | Type               | Format              | Options | Description                                                                                                                                                                                                 |
+| Parameter | Required | Default | Type               | Format              | Options | Description                                                                                                                                                                                                 |
 | --------- | -------- | ------- | ------------------ | ------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | meterId   | true     |         | Integer            | 1234                |         | <p>meterId represents an ID of the device in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p> |
 | startTime | true     |         | String (timestamp) | 2020-10-15T00:00:00 |         |
@@ -216,6 +218,44 @@ X-API-Key: <API_KEY>
 }
 ```
 ## Get normalized data
+This API allows to request normalized(processed) data for multiple devices.
+Data is presented as an Array of objects. 
+```
+GET /meters-data/crunched?meterIds=<METER_ID>,<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
+Host: integ.api.zira.us
+X-API-Key: <API_KEY>
+```
+### Parameters:
+| Parameter | Required | Default | Type                     | Format              | Options | Description                                                                                                                                                                                                                             |
+| --------- | -------- | ------- | ------------------------ | ------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| meterIds  | true     |         | String (comma separated) | 1234,5656 ...       |         | <p>meterIds represent an array of IDs of devices. You can specify one or more IDs.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p> |
+| startTime | true     |         | String (timestamp)       | 2020-10-15T00:00:00 |         |
+| endTime   | true     |         | String (timestamp)       | 2020-11-15T23:59:59 |         |
+
+### Response:
+Each object(reading) contains timestamp, id and the metrics of device. <br>You can also checkout the metrics in the system, by going to the site page > devices > click on one of the devices
+**Succssfull response:**
+```
+{
+  "data": [
+      {
+          "eventDate": <TIME_STAMP>,
+          "meterId": <METER_ID>,
+          <METRIC_NAME_1>: <NORMALIZED_READING>,
+          <METRIC_NAME_2>: <NORMALIZED_READING>
+          ...
+      }
+  ]
+}
+```
+**Error response:**
+```
+{
+    "message": "<ERROR MESSAGE>",
+    "details": "<ERROR DETAILS>"
+}
+```
+
 ## Get aggregated data
 ## Create post
 ```
