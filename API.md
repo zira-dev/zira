@@ -15,10 +15,11 @@
 - [Export CSV](#export-csv)
   - [Parameters:](#parameters-1)
   - [Response:](#response-4)
-- [Get normalized data](#get-normalized-data)
+- [Get data](#get-data)
   - [Parameters:](#parameters-2)
   - [Response:](#response-5)
 - [Get aggregated data](#get-aggregated-data)
+  - [Parameters:](#parameters-3)
 - [Create post](#create-post)
   - [Payload:](#payload-2)
   - [Response:](#response-6)
@@ -29,7 +30,7 @@
 Use this one to add device readings manually.
 
 ```
-POST /meters-data/reading HTTP/1.1
+POST /zira-public/reading HTTP/1.1
 Host: integ.api.zira.us
 Content-Type: application/json
 X-API-Key: <API_KEY>
@@ -67,7 +68,7 @@ Content-Length: <CONTENT_LENGTH>
 ```
 ## Add event*
 ```
-POST /zira-client/event HTTP/1.1
+POST /zira-public/event HTTP/1.1
 Host: api.zira.us
 X-API-Key: <API_KEY>
 Content-Type: application/json
@@ -120,7 +121,7 @@ There are 3 steps to import CSV file with your readings.
 This will give you a list of column names of the CSV file. 
 
 ```
-GET /zira-client/reading/template?meterId=<METER_ID> HTTP/1.1
+GET /zira-public/reading/template?meterId=<METER_ID> HTTP/1.1
 Host: api.zira.us
 X-API-Key: <API_KEY>
 ```
@@ -147,7 +148,7 @@ X-API-Key: <API_KEY>
 
 ### 2. Getting signed URL for Upload
 ```
-GET /zira-client/reading/import?meterId=<METER_ID> HTTP/1.1
+GET /zira-public/reading/import?meterId=<METER_ID> HTTP/1.1
 Host: api.zira.us
 X-API-Key: <API_KEY>
 ```
@@ -190,7 +191,7 @@ HTTP/1.1 <HTTP_ERROR_CODE>
 ```
 ## Export CSV
 ```
-GET /meters-data/export/?meterId=<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
+GET /zira-public/reading/export/?meterId=<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
 Host: integ.api.zira.us
 X-API-Key: <API_KEY>
 ```
@@ -217,11 +218,11 @@ X-API-Key: <API_KEY>
     "details": "<ERROR DETAILS>"
 }
 ```
-## Get normalized data
-This API allows to request normalized(processed) data for multiple devices.
+## Get data
+This API allows to request readings data for multiple devices.
 Data is presented as an Array of objects. 
 ```
-GET /meters-data/crunched?meterIds=<METER_ID>,<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
+GET /zira-public/reading?meterIds=<METER_ID>,<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
 Host: integ.api.zira.us
 X-API-Key: <API_KEY>
 ```
@@ -241,8 +242,8 @@ Each object(reading) contains timestamp, id and the metrics of device. <br>You c
       {
           "eventDate": <TIME_STAMP>,
           "meterId": <METER_ID>,
-          <METRIC_NAME_1>: <NORMALIZED_READING>,
-          <METRIC_NAME_2>: <NORMALIZED_READING>
+          <METRIC_NAME_1>: <READING>,
+          <METRIC_NAME_2>: <READING>
           ...
       }
   ]
@@ -257,9 +258,21 @@ Each object(reading) contains timestamp, id and the metrics of device. <br>You c
 ```
 
 ## Get aggregated data
+```
+GET /zira-public/system/analysis/<SYSTEM_ID>?interval=<INTERVAL>&fromTime=<FROM_TIME>&toTime=<TO_TIME> HTTP/1.1
+Host: integ.api.zira.us
+```
+
+### Parameters:
+| Parameter | Placeholder | Required | Default | Type               | Format              | Options                                | Description                                                                                                                  |
+| --------- | ----------- | -------- | ------- | ------------------ | ------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| interval  | <INTERVAL>  | true     |         | String (interval)  | 1 hour              | 5 minutes, 15 minutes, 1 hours, 1 days | Checkout the channels page in the system and click on one of the channels, you'll be able to see the intervals on your right |
+| fromTime  | <FROM_TIME> | true     |         | String (timestamp) | 2020-10-15T00:00:00 |                                        |                                                                                                                              |
+| toTime    | <TO_TIME>   | true     |         | String (timestamp) | 2020-11-15T23:59:59 |                                        |                                                                                                                              |
+
 ## Create post
 ```
-POST /zira-client/post HTTP/1.1
+POST /zira-public/post HTTP/1.1
 Host: api.zira.us
 X-API-Key: <API_KEY>
 Content-Type: application/json

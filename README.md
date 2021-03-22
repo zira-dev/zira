@@ -62,7 +62,6 @@ Content-Length: 86
 | content     | true     |         | String           |             |                                                                                                                                                                                       |
 
 ### Response:
-
 **Succssfull response:**
 
 ```
