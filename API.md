@@ -1,6 +1,6 @@
 
 - [Add reading](#add-reading)
-- [Add event*](#add-event)
+- [Add event](#add-event)
 - [Import CSV](#import-csv)
   - [1. Getting CSV template](#1-getting-csv-template)
   - [2. Getting signed URL for Upload](#2-getting-signed-url-for-upload)
