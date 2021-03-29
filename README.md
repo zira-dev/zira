@@ -1,21 +1,24 @@
-
 ![zira](images/zira-repo-image.png)
+
 ## Overview
+
 This repository contains documentation, examples and code snippets for using zira public APIs in order to create custom zira applications
 or integrate zira data with BI tools or operational applications
 
 Possible Usage:
- - Create custom post on zira feed
- - Manage tasks on zira
- - Create custom collector, in order to post your data to zira data-source
- - Orchestrate business workflows that reflects on zira feed
- - Fetch aggregated data from zira channel
- - Fetch real-time, normalized data from zira data-source
- - Export CSV file on specific time range/interval
- - Import CSV file to specific data-source (for history upload or batch)
- - Connect IOT devices in order to manage them on zira app, visualize data and automate processes
+
+- Create custom post on zira feed
+- Manage tasks on zira
+- Create custom collector, in order to post your data to zira data-source
+- Orchestrate business workflows that reflects on zira feed
+- Fetch aggregated data from zira channel
+- Fetch real-time, normalized data from zira data-source
+- Export CSV file on specific time range/interval
+- Import CSV file to specific data-source (for history upload or batch)
+- Connect IOT data-sources in order to manage them on zira app, visualize data and automate processes
 
 ## Table of Contents
+
 - [Overview](#overview)
 - [Table of Contents](#table-of-contents)
 - [Getting started](#getting-started)
@@ -33,10 +36,11 @@ Possible Usage:
   - [Create/Edit task](#createedit-task)
 
 ## Getting started
-1. In order to use zira public APIs, you must sign up to zira. 
+
+1. In order to use zira public APIs, you must sign up to zira.
 2. Once logged in to zira, create new application and generate API key.
    Here's how:
-      go to https://my.zira.us/applications > Add new application > enter application name > Generate api key
+   go to https://my.zira.us/applications > Add new application > enter application name > Generate api key
 3. API key should be added to request header of each API call:
 
 ```
@@ -46,7 +50,8 @@ X-API-Key: <YOUR_API_KEY>
 ## API reference
 
 ### Add reading
-Use this one to add device readings manually.
+
+Use this one to add data-source readings manually.
 
 ```
 POST /zira-public/reading HTTP/1.1
@@ -64,11 +69,11 @@ Content-Length: <CONTENT_LENGTH>
 
 <h3>Payload:</h3>
 
-| Property     | Required | Default | Type             | Format                | Options | Description                                                                                                                                                                                                                                  |
-| ------------ | -------- | ------- | ---------------- | --------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| METER_ID     | true     |         | String (numeric) | "1234"                |         | <p>meterId represents an ID of the device in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p>                                  |
-| TIME_STAMP   | true     |         | String           | "2021-01-21T19:32:00" |         | <p>Date and time of the reading. Please use ISO 8601 standard<br>Note there's no timezone, assuming it's the timezone of the site.</p>                                                                                                       |
-| VALUES_ARRAY | true     |         | Array            | [1.23, 110]           |         | <p>Array of reading values. The order is according to the schema of device.<br>For example, if you have a power meter, configured with two metrics - Current(Amps) and Voltage(Volts), you'll have to pass [<AMPS_VALUE>, <VOLTS_VALUE>]</p> |
+| Property     | Required | Default | Type             | Format                | Options | Description                                                                                                                                                                                                                                       |
+| ------------ | -------- | ------- | ---------------- | --------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| METER_ID     | true     |         | String (numeric) | "1234"                |         | <p>meterId represents an ID of the data-source in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted data-source.<br>Then, select Info tab, you'll see the ID on the right.</p>                             |
+| TIME_STAMP   | true     |         | String           | "2021-01-21T19:32:00" |         | <p>Date and time of the reading. Please use ISO 8601 standard<br>Note there's no timezone, assuming it's the timezone of the site.</p>                                                                                                            |
+| VALUES_ARRAY | true     |         | Array            | [1.23, 110]           |         | <p>Array of reading values. The order is according to the schema of data-source.<br>For example, if you have a power meter, configured with two metrics - Current(Amps) and Voltage(Volts), you'll have to pass [<AMPS_VALUE>, <VOLTS_VALUE>]</p> |
 
 <h3>Response:</h3>
 <h4>Successful response:</h4>
@@ -80,6 +85,7 @@ HTTP/1.1 200 OK
     "data": "<RESULT>"
 }
 ```
+
 <h3>Response body</h3>
 
 <h4>data:</h4>
@@ -87,7 +93,6 @@ HTTP/1.1 200 OK
 | Parameter | Type   | Format | Options | Description                               |
 | --------- | ------ | ------ | ------- | ----------------------------------------- |
 | RESULT    | String |        |         | Text confirmation of successful operation |
-
 
 <h4>Error response:</h4>
 
@@ -118,18 +123,19 @@ Content-Length: <CONTENT_LENGTH>
     "additionalInfo": "{\"please9\" : \"work9\"}"
 }
 ```
+
 <h3>Payload:</h3>
 
 | Property       | Required | Default | Type               | Options | Description |
 | -------------- | -------- | ------- | ------------------ | ------- | ----------- |
 | eventGroupId   | true     |         | String (numeric)   |         |             |
-| eventName      | true     |         | String             |         |             |
+| eventName      | false    |         | String             |         |             |
 | startTime      | true     |         | String (timestamp) |         |             |
-| endTime        | true     |         | String (timestamp) |         |             |
-| customerCode1  | true     |         | String             |         |             |
-| customerCode2  | true     |         | String             |         |             |
-| userComments   | true     |         | String             |         |             |
-| additionalInfo | true     |         | String             |         |             |
+| endTime        | false    |         | String (timestamp) |         |             |
+| customerCode1  | false    |         | String             |         |             |
+| customerCode2  | false    |         | String             |         |             |
+| userComments   | false    |         | String             |         |             |
+| additionalInfo | false    |         | String             |         |             |
 
 <h3>Response:</h3>
 
@@ -150,7 +156,6 @@ HTTP/1.1 200 OK
 | ----------- | ------- | ------ | ------- | --------------------- |
 | NEW_POST_ID | Integer |        |         | New post reference ID |
 
-
 <h4>Error response:</h4>
 
 ```
@@ -161,10 +166,12 @@ HTTP/1.1 200 OK
 ```
 
 ### Import CSV
+
 There are 3 steps to import CSV file with your readings.
 
 #### 1. Getting CSV template
-This will give you a list of column names of the CSV file. 
+
+This will give you a list of column names of the CSV file.
 
 ```
 GET /zira-public/reading/template?meterId=<METER_ID> HTTP/1.1
@@ -174,9 +181,9 @@ X-API-Key: <API_KEY>
 
 <h3>Parameters:</h3>
 
-| Parameter | Required | Default | Type    | Format | Options | Description                                                                                                                                                                                                 |
-| --------- | -------- | ------- | ------- | ------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| METER_ID  | true     |         | Integer | "1234" |         | <p>meterId represents an ID of the device in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p> |
+| Parameter | Required | Default | Type    | Format | Options | Description                                                                                                                                                                                                           |
+| --------- | -------- | ------- | ------- | ------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| METER_ID  | true     |         | Integer | "1234" |         | <p>meterId represents an ID of the data-source in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted data-source.<br>Then, select Info tab, you'll see the ID on the right.</p> |
 
 <h3>Response:</h3>
 
@@ -196,7 +203,6 @@ HTTP/1.1 200 OK
 | Parameter              | Type                     | Format | Options | Description                                                                                                                                       |
 | ---------------------- | ------------------------ | ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | COMMA_SEPARATED_STRING | String (comma separated) |        |         | CSV headers, separated by comma. These are the column names of csv file.<br><b>Important:</b> keep the original order and don't change the names. |
-
 
 <h4>Error response:</h4>
 
@@ -236,7 +242,6 @@ HTTP/1.1 200 OK
 | ---------- | ------------ | ------ | ------- | --------------------------------------------- |
 | UPLOAD_URL | String (URL) |        |         | Temporary signed link to upload the CSV file. |
 
-
 <h4>Error response:</h4>
 
 ```
@@ -247,6 +252,7 @@ HTTP/1.1 200 OK
 ```
 
 #### 3. Upload
+
 ```
 PUT /<SIGNED_URL_PATH> HTTP/1.1
 Host: <SIGNED_URL_HOSTNAME>
@@ -278,9 +284,9 @@ X-API-Key: <API_KEY>
 
 <h3>Parameters:</h3>
 
-| Parameter  | Required | Default | Type               | Format              | Options | Description                                                                                                                                                                                                 |
-| ---------- | -------- | ------- | ------------------ | ------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| METER_ID   | true     |         | Integer            | 1234                |         | <p>meterId represents an ID of the device in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p> |
+| Parameter  | Required | Default | Type               | Format              | Options | Description                                                                                                                                                                                                           |
+| ---------- | -------- | ------- | ------------------ | ------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| METER_ID   | true     |         | Integer            | 1234                |         | <p>meterId represents an ID of the data-source in question.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted data-source.<br>Then, select Info tab, you'll see the ID on the right.</p> |
 | START_TIME | true     |         | String (timestamp) | 2020-10-15T00:00:00 |         |
 | END_TIME   | true     |         | String (timestamp) | 2020-11-15T23:59:59 |         |
 
@@ -314,8 +320,9 @@ HTTP/1.1 200 OK
 ```
 
 ### Get data
-This API allows to request readings data for multiple devices.
-Data is presented as an Array of objects. 
+
+This API allows to request readings data for multiple data-sources.
+Data is presented as an Array of objects.
 
 ```
 GET /zira-public/reading?meterIds=<METER_ID>,<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
@@ -325,14 +332,17 @@ X-API-Key: <API_KEY>
 
 <h3>Parameters:</h3>
 
-| Parameter  | Required | Default | Type                         | Format              | Options | Description                                                                                                                                                                                                                             |
-| ---------- | -------- | ------- | ---------------------------- | ------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| METER_ID   | true     |         | String (comma separated IDs) | 1234,5656 ...       |         | <p>meterIds represent an array of IDs of devices. You can specify one or more IDs.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted device.<br>Then, select Info tab, you'll see the ID on the right.</p> |
-| START_TIME | true     |         | String (timestamp)           | 2020-10-15T00:00:00 |         |
-| END_TIME   | true     |         | String (timestamp)           | 2020-11-15T23:59:59 |         |
+| Parameter  | Required                                                                                                | Default | Type                         | Format                                                  | Options                     | Description                                                                                                                                                                                                                                       |
+| ---------- | ------------------------------------------------------------------------------------------------------- | ------- | ---------------------------- | ------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| METER_ID   | true                                                                                                    |         | String (comma separated IDs) | 1234,5656 ...                                           |                             | <p>meterIds represent an array of IDs of data-sources. You can specify one or more IDs.<br>To get an ID, navigate to "Data Sources" tab of the Site, select the wanted data-source.<br>Then, select Info tab, you'll see the ID on the right.</p> |
+| START_TIME | true                                                                                                    |         | String (timestamp)           | 2020-10-15T00:00:00                                     |                             |
+| END_TIME   | true                                                                                                    |         | String (timestamp)           | 2020-11-15T23:59:59                                     |                             |
+| SORT_DESC  | false                                                                                                   | true    | Boolean                      |                                                         | true / false                | Use it to sort out the response in ascending/descending order.                                                                                                                                                                                    |
+| LIMIT      | false                                                                                                   | 100     | Integer                      |                                                         | Any value between 1 and 100 | Use it to limit the number of records in response.                                                                                                                                                                                                |
+| LAST_VALUE | false (it's required when the number of records in result is greater than specified in LIMIT parameter) | NULL    | String                       | eyJldmVudF9kYXRlIjoiMjAyMC0xMC0yOFQxNDozMjowMi42NjZaIn0 |                             | When the number of records in the result is more than the number you specified in LIMIT paremeter, the API will return the encrypted value of the last record. Use it for the next request to get the remaining records.                          |
 
 <h3>Response:</h3>
-Each object(reading) contains timestamp, id and the metrics of device. <br>You can also checkout the metrics in the system, by going to the site page > devices > click on one of the devices
+Each object(reading) contains timestamp, id and the metrics of data-source. <br>You can also checkout the metrics in the system, by going to the site page > data-sources > click on one of the data-sources
 
 <h4>Successful response:</h4>
 
@@ -358,7 +368,7 @@ HTTP/1.1 200 OK
 | Parameter            | Type               | Format              | Options | Description                                                                                                   |
 | -------------------- | ------------------ | ------------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
 | TIME_STAMP           | String (timestamp) | 2020-10-15T00:00:00 |         | Reading timestamp                                                                                             |
-| METER_ID             | Integer            |                     |         | Device ID                                                                                                     |
+| METER_ID             | Integer            |                     |         | data-source ID                                                                                                |
 | METRIC_NAME: READING | Integer            |                     |         | Reading value. Metric names - METRIC_NAME_1, METRIC_NAME_2... etc. and their values - READING_1, READING_2... |
 
 <h4>Error response:</h4>
@@ -442,45 +452,44 @@ HTTP/1.1 200 OK
 
 <h3>data:</h3>
 
-| Parameter | Type               | Format              | Options                             | Description |
-| --------- | ------------------ | ------------------- | ----------------------------------- | ----------- |
-| status    | String (interval)  | No Reading          | Active, No Reading, Pending Devices |             |
-| lasts     | String (timestamp) | 2020-10-15T00:00:00 |                                     |             |
-| kpis      | Array<Kpi>         | 2020-11-15T23:59:59 |                                     |             |
-| charts    | Array<Chart>       |                     |                                     |             |
-| targets   |                    |                     |                                     |             |
-| version   | String             | v3                  |                                     |             |
+| Parameter | Type               | Format              | Options                             | Description                                                                                                                                                                                                                                                                |
+| --------- | ------------------ | ------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| status    | String (interval)  | No Reading          | Active, No Reading, Pending Devices | Current state of the system, where "Active" is positive, "No Reading" means that either there is no new readings/no data-source activity/data collection is no functioning properly. "Pending devices" is an initial state, meaning that the data is about to be received. |
+| lasts     | String (timestamp) | 2020-10-15T00:00:00 |                                     |                                                                                                                                                                                                                                                                            |
+| kpis      | Array<Kpi>         | 2020-11-15T23:59:59 |                                     | An array of KPIs objects values                                                                                                                                                                                                                                            |
+| charts    | Array<Chart>       |                     |                                     | An array of chart objects                                                                                                                                                                                                                                                  |
+| targets   |                    |                     |                                     |                                                                                                                                                                                                                                                                            |
+| version   | String             | v3                  |                                     |                                                                                                                                                                                                                                                                            |
 
 <h3>Kpi:</h3>
 
-| Parameter   | Type               | Format              | Options     | Description |
-| ----------- | ------------------ | ------------------- | ----------- | ----------- |
-| name        | String             | No Reading          | No Reading, |             |
-| unit        | String (timestamp) | 2020-10-15T00:00:00 |             |             |
-| group       | Array<object>      | 2020-11-15T23:59:59 |             |             |
-| value       | String (interval)  | No Reading          | No Reading, |             |
-| toDate      | String (timestamp) | 2020-10-15T00:00:00 |             |             |
-| maxDate     | Array<object>      | 2020-11-15T23:59:59 |             |             |
-| ordinal     | String             | No Reading          | No Reading, |             |
-| fromDate    | String (timestamp) | 2020-10-15T00:00:00 |             |             |
-| interval    | String (interval)  | 1440                |             |             |
-| description | Array<object>      | 2020-11-15T23:59:59 |             |             |
+| Parameter   | Type               | Format              | Options | Description                                          |
+| ----------- | ------------------ | ------------------- | ------- | ---------------------------------------------------- |
+| name        | String             | Volume              |         | Name of the KPI                                      |
+| unit        | String             | L (Liters)          |         | Units of measure                                     |
+| group       | Array<object>      |                     |         |                                                      |
+| value       | Integer            | 3500                |         | KPI value (3500 L in this example)                   |
+| toDate      | String (timestamp) | 2020-10-15T00:00:00 |         | KPI active period end date.                          |
+| maxDate     | String (timestamp) | 2020-11-15T23:59:59 |         | Represents the date of the max. value of KPI         |
+| ordinal     | Integer            |                     |         | Number that represent an order of the KPIs           |
+| fromDate    | String (timestamp) | 2020-10-15T00:00:00 |         | KPI active period start date.                        |
+| interval    | String (interval)  | 1440                |         | KPI active period in minutes (1440 mins. = 24 hours) |
+| description | String             |                     |         | KPI description text                                 |
 
 <h3>Chart:</h3>
 
-| Parameter   | Type               | Format                   | Options | Description |
-| ----------- | ------------------ | ------------------------ | ------- | ----------- |
-| data        | Array<Array<data>> | [[123, 1.5], [124, 1.6]] |         |             |
-| name        | String             | No Reading               |         |             |
-| unit        | String             | "L"                      |         |             |
-| group       | Array<object>      | 2020-11-15T23:59:59      |         |             |
-| value       | integer            | No Reading               |         |             |
-| toDate      | String (timestamp) | 2020-10-15T00:00:00      |         |             |
-| maxDate     | String (timestamp) | 2020-11-15T23:59:59      |         |             |
-| ordinal     | String (interval)  | No Reading               |         |             |
-| fromDate    | String (timestamp) | 2020-10-15T00:00:00      |         |             |
-| interval    | integer            | 2020-10-15T00:00:00      |         |             |
-| description | Array<object>      | 2020-11-15T23:59:59      |         |             |
+| Parameter   | Type               | Format                   | Options                                                   | Description                                                                                                                     |
+| ----------- | ------------------ | ------------------------ | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| data        | Array<Array<data>> | [[123, 1.5], [124, 1.6]] |                                                           | Two dimentsional Array of chart data. Columns represent the data-source and the . Each row is an array of data-source readings. |
+| name        | String             | Name of the chart        |                                                           |                                                                                                                                 |
+| unit        | String             | "L"                      |                                                           | Units of measure                                                                                                                |
+| group       |                    |                          |                                                           |                                                                                                                                 |
+| toDate      | String (timestamp) | 2020-10-15T00:00:00      | Readings active period end date.                          |                                                                                                                                 |
+| maxDate     | String (timestamp) | 2020-11-15T23:59:59      | Represents the date of the max. value in the chart        |                                                                                                                                 |
+| ordinal     | Integer            |                          |                                                           |                                                                                                                                 |
+| fromDate    | String (timestamp) | 2020-10-15T00:00:00      | Readings active period start date.                        |                                                                                                                                 |
+| interval    | integer            | 2020-10-15T00:00:00      | Readings active period in minutes (1440 mins. = 24 hours) |                                                                                                                                 |
+| description | Array<object>      | 2020-11-15T23:59:59      | Chart description text                                    |                                                                                                                                 |
 
 ### Create post
 
@@ -521,10 +530,9 @@ HTTP/1.1 200 OK
 
 <h4>data:</h4>
 
-| Parameter   | Type    | Format | Options | Description |
-| ----------- | ------- | ------ | ------- | ----------- |
-| NEW_POST_ID | Integer |        |         |             | New post reference ID |
-
+| Parameter   | Type    | Format | Options | Description           |
+| ----------- | ------- | ------ | ------- | --------------------- |
+| NEW_POST_ID | Integer |        |         | New post reference ID |
 
 <h4>Error response:</h4>
 
