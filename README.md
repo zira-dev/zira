@@ -24,7 +24,6 @@ Possible Usage:
 - [Getting started](#getting-started)
 - [API reference](#api-reference)
   - [Add reading](#add-reading)
-  - [Add event](#add-event)
   - [Import CSV](#import-csv)
     - [1. Getting CSV template](#1-getting-csv-template)
     - [2. Getting signed URL for Upload](#2-getting-signed-url-for-upload)
@@ -33,7 +32,6 @@ Possible Usage:
   - [Get data](#get-data)
   - [Get aggregated data](#get-aggregated-data)
   - [Create post](#create-post)
-  - [Create/Edit task](#createedit-task)
 
 ## Getting started
 
@@ -93,68 +91,6 @@ HTTP/1.1 200 OK
 | Parameter | Type   | Format | Options | Description                               |
 | --------- | ------ | ------ | ------- | ----------------------------------------- |
 | RESULT    | String |        |         | Text confirmation of successful operation |
-
-<h4>Error response:</h4>
-
-```
-{
-    "message": "<ERROR MESSAGE>",
-    "details": "<ERROR DETAILS>"
-}
-```
-
-### Add event
-
-```
-POST /zira-public/event HTTP/1.1
-Host: api.zira.us
-X-API-Key: <API_KEY>
-Content-Type: application/json
-Content-Length: <CONTENT_LENGTH>
-
-{
-    "eventGroupId": "5",
-    "eventName" : "My Manual Event 11",
-    "startTime": "2020-04-28T00:00:00",
-    "endTime" : "2020-04-29T00:00:00",
-    "customerCode1" : "11",
-    "customerCode2" : "aa",
-    "userComments": "",
-    "additionalInfo": "{\"please9\" : \"work9\"}"
-}
-```
-
-<h3>Payload:</h3>
-
-| Property       | Required | Default | Type               | Options | Description |
-| -------------- | -------- | ------- | ------------------ | ------- | ----------- |
-| eventGroupId   | true     |         | String (numeric)   |         |             |
-| eventName      | false    |         | String             |         |             |
-| startTime      | true     |         | String (timestamp) |         |             |
-| endTime        | false    |         | String (timestamp) |         |             |
-| customerCode1  | false    |         | String             |         |             |
-| customerCode2  | false    |         | String             |         |             |
-| userComments   | false    |         | String             |         |             |
-| additionalInfo | false    |         | String             |         |             |
-
-<h3>Response:</h3>
-
-<h4>Successful response:</h4>
-
-```
-HTTP/1.1 200 OK
-{
-    "data": "<NEW_POST_ID>"
-}
-```
-
-<h3>Response body</h3>
-
-<h4>data:</h4>
-
-| Parameter   | Type    | Format | Options | Description           |
-| ----------- | ------- | ------ | ------- | --------------------- |
-| NEW_POST_ID | Integer |        |         | New post reference ID |
 
 <h4>Error response:</h4>
 
@@ -542,5 +478,3 @@ HTTP/1.1 200 OK
     "details": "<ERROR DETAILS>"
 }
 ```
-
-### Create/Edit task
