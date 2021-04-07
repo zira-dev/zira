@@ -63,7 +63,7 @@ Use this one to add data-source readings manually.
 
 ```
 POST /public/reading HTTP/1.1
-Host: integ.api.zira.us
+Host: api.zira.us
 Content-Type: application/json
 X-API-Key: <API_KEY>
 Content-Length: <CONTENT_LENGTH>
@@ -117,7 +117,7 @@ HTTP/1.1 200 OK
 
 ```
 GET /public/reading/export/?meterId=<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
-Host: integ.api.zira.us
+Host: api.zira.us
 X-API-Key: <API_KEY>
 ```
 
@@ -165,7 +165,7 @@ Data is presented as an Array of objects.
 
 ```
 GET /public/reading?meterIds=<METER_ID>,<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
-Host: integ.api.zira.us
+Host: api.zira.us
 X-API-Key: <API_KEY>
 ```
 
@@ -223,7 +223,7 @@ HTTP/1.1 200 OK
 
 ```
 GET /public/system/analysis?systemId=<CHANNEL_ID>?interval=<INTERVAL>&fromTime=<START_TIME>&toTime=<END_TIME> HTTP/1.1
-Host: integ.api.zira.us
+Host: api.zira.us
 ```
 
 <h3>Parameters:</h3>
