@@ -42,7 +42,7 @@ Possible Usage:
 3. API key should be added to request header of each API call:
 
 ```
-X-API-Key: <YOUR_API_KEY>
+X-API-Key: <API_KEY>
 ```
 
 ## API reference
@@ -52,7 +52,7 @@ X-API-Key: <YOUR_API_KEY>
 Use this one to add data-source readings manually.
 
 ```
-POST /zira-public/reading HTTP/1.1
+POST /public/reading HTTP/1.1
 Host: integ.api.zira.us
 Content-Type: application/json
 X-API-Key: <API_KEY>
@@ -110,7 +110,7 @@ There are 3 steps to import CSV file with your readings.
 This will give you a list of column names of the CSV file.
 
 ```
-GET /zira-public/reading/template?meterId=<METER_ID> HTTP/1.1
+GET /public/reading/template?meterId=<METER_ID> HTTP/1.1
 Host: api.zira.us
 X-API-Key: <API_KEY>
 ```
@@ -152,7 +152,7 @@ HTTP/1.1 200 OK
 #### 2. Getting signed URL for Upload
 
 ```
-GET /zira-public/reading/import?meterId=<METER_ID> HTTP/1.1
+GET /public/reading/import?meterId=<METER_ID> HTTP/1.1
 Host: api.zira.us
 X-API-Key: <API_KEY>
 ```
@@ -165,7 +165,7 @@ X-API-Key: <API_KEY>
 HTTP/1.1 200 OK
 {
     "data": {
-        "fileUrl": "<UPLOAD_URL>"
+        "fileUrl": "<SIGNED_URL>"
     }
 }
 ```
@@ -176,7 +176,7 @@ HTTP/1.1 200 OK
 
 | Parameter  | Type         | Format | Options | Description                                   |
 | ---------- | ------------ | ------ | ------- | --------------------------------------------- |
-| UPLOAD_URL | String (URL) |        |         | Temporary signed link to upload the CSV file. |
+| SIGNED_URL | String (URL) |        |         | Temporary signed link to upload the CSV file. |
 
 <h4>Error response:</h4>
 
@@ -213,7 +213,7 @@ HTTP/1.1 <HTTP_ERROR_CODE>
 ### Export CSV
 
 ```
-GET /zira-public/reading/export/?meterId=<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
+GET /public/reading/export/?meterId=<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
 Host: integ.api.zira.us
 X-API-Key: <API_KEY>
 ```
@@ -261,7 +261,7 @@ This API allows to request readings data for multiple data-sources.
 Data is presented as an Array of objects.
 
 ```
-GET /zira-public/reading?meterIds=<METER_ID>,<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
+GET /public/reading?meterIds=<METER_ID>,<METER_ID>&endTime=<END_TIME>&startTime=<START_TIME> HTTP/1.1
 Host: integ.api.zira.us
 X-API-Key: <API_KEY>
 ```
@@ -319,18 +319,18 @@ HTTP/1.1 200 OK
 ### Get aggregated data
 
 ```
-GET /zira-public/system/analysis/<SYSTEM_ID>?interval=<INTERVAL>&fromTime=<FROM_TIME>&toTime=<TO_TIME> HTTP/1.1
+GET /public/system/analysis?systemId=<CHANNEL_ID>?interval=<INTERVAL>&fromTime=<START_TIME>&toTime=<END_TIME> HTTP/1.1
 Host: integ.api.zira.us
 ```
 
 <h3>Parameters:</h3>
 
-| Parameter | Required | Default | Type               | Format              | Options                                | Description                                                                                                                  |
-| --------- | -------- | ------- | ------------------ | ------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| SYSTEM_ID | true     |         | Integer            |                     |                                        | desc.                                                                                                                        |
-| INTERVAL  | true     |         | String (interval)  | 1 hour              | 5 minutes, 15 minutes, 1 hours, 1 days | Checkout the channels page in the system and click on one of the channels, you'll be able to see the intervals on your right |
-| FROM_TIME | true     |         | String (timestamp) | 2020-10-15T00:00:00 |                                        |                                                                                                                              |
-| TO_TIME   | true     |         | String (timestamp) | 2020-11-15T23:59:59 |                                        |                                                                                                                              |
+| Parameter  | Required | Default | Type               | Format              | Options                                | Description                                                                                                                                   |
+| ---------- | -------- | ------- | ------------------ | ------------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| CHANNEL_ID | true     |         | Integer            |                     |                                        | Checkout the site page in the system, select channels tab and choose one of the channels - then select the info. tab.                         |
+| INTERVAL   | true     |         | String (interval)  | 1 hour              | 5 minutes, 15 minutes, 1 hours, 1 days | Checkout the site page in the system, select channels tab and click on one of the channels, you'll be able to see the intervals on your right |
+| START_TIME | true     |         | String (timestamp) | 2020-10-15T00:00:00 |                                        |                                                                                                                                               |
+| END_TIME   | true     |         | String (timestamp) | 2020-11-15T23:59:59 |                                        |                                                                                                                                               |
 
 <h3>Response:</h3>
 <h4>Successful response:</h4>
@@ -430,7 +430,7 @@ HTTP/1.1 200 OK
 ### Create post
 
 ```
-POST /zira-public/post HTTP/1.1
+POST /public/post HTTP/1.1
 Host: api.zira.us
 X-API-Key: <API_KEY>
 Content-Type: application/json
@@ -438,18 +438,18 @@ Content-Length: <CONTENT_LENGTH>
 
 {
     "postTypeId": <POST_TYPE_ID>,
-    "content": <CONTENT>,
-    "toChannelId": <CHANNEL_ID>
+    "content": <POST_CONTENT>,
+    "toChannelId": <TARGET_CHANNEL_ID>
 }
 ```
 
 <h3>Payload:
 
-| Property     | Required | Default | Type             | Format            | Options     | Description                                                                                                                                                                           |
-| ------------ | -------- | ------- | ---------------- | ----------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CHANNEL_ID   | true     |         | String (numeric) | "1234"            |             | <p>To get channel ID, go to the desired chanel in the system and checkout the URL, the number at the end of the Path is the channel ID.<br>Example: https://my.zira.us/channels/1</p> |
-| POST_TYPE_ID | true     |         | String (numeric) | "1"               | ["1", "15"] | "1": Ordinary post, "15": Alert post                                                                                                                                                  |
-| CONTENT      | true     |         | String           | "Hello everyone!" |             |                                                                                                                                                                                       |
+| Property          | Required | Default | Type             | Format            | Options     | Description                                                                                                                                                                           |
+| ----------------- | -------- | ------- | ---------------- | ----------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| TARGET_CHANNEL_ID | true     |         | String (numeric) | "1234"            |             | <p>To get channel ID, go to the desired chanel in the system and checkout the URL, the number at the end of the Path is the channel ID.<br>Example: https://my.zira.us/channels/1</p> |
+| POST_TYPE_ID      | true     |         | String (numeric) | "1"               | ["1", "15"] | "1": Ordinary post, "15": Alert post                                                                                                                                                  |
+| POST_CONTENT      | true     |         | String           | "Hello everyone!" |             |                                                                                                                                                                                       |
 
 <h3>Response:</h3>
 
