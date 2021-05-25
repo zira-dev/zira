@@ -6,15 +6,6 @@
 This repository contains documentation, examples and code snippets for using zira public APIs in order to create custom zira applications
 or integrate zira data with BI tools or operational applications
 
-### For additional zira documentation, please check out below references:
-[App documentation](https://website.zira.us/docs/getting-started/introduction/)
-
-[Developers](https://website.zira.us/developers/getting-started/introduction/)
-
-[Postman API](https://apidocs.zira.us/)
-
-
-
 ### Possible Usage:
 
 - Create custom post on zira feed
@@ -41,3 +32,37 @@ the header X-API-Key will be used to authenticate any api call to zira
 ```
 X-API-Key: <YOUR_API_KEY>
 ```
+
+## Add post Example
+
+**POST** `https://api.zira.us/public/post`
+
+#### Description
+Add Post API allows to create new post on specific channel
+
+#### Example payload
+
+```json
+{
+    "title":"Hello world",
+    "content": "This is my message",
+    "toChannelId": "123"
+}
+
+```
+
+#### Properties
+
+| Property    | Required | Type   | Example                | Description                             |
+| ----------- | -------- | ------ | ---------------------- | --------------------------------------- |
+| title       | false    | String | `"Hello world"`        | post title                              |
+| content     | true     | String | `"This is my message"` | post content                            |
+| toChannelId | true     | String | `"456"`                | channel id (can be copied from zira UI) |
+
+
+### For additional zira documentation, please check out below references:
+[App documentation](https://website.zira.us/docs/getting-started/introduction/)
+
+[Developers](https://website.zira.us/developers/getting-started/introduction/)
+
+[Postman API](https://apidocs.zira.us/)
