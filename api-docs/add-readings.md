@@ -7,8 +7,7 @@ Add Reading API allows to insert readings related to specific data-source.
 [{
 	"meterId":"4080", 
 	"timestamp": "2021-04-09T05:44:20",
-	"values":
-[{ "temperature":"123", "humidity":"456" }]
+	"values": [{ "temperature":"123", "humidity":"456" }]
 }]
 
 ```
