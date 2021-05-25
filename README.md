@@ -35,10 +35,10 @@ X-API-Key: <YOUR_API_KEY>
 
 ## Add post Example
 
-**POST** `https://api.zira.us/public/post`
-
 #### Description
 Add Post API allows to create new post on specific channel
+
+**POST** `https://api.zira.us/public/post`
 
 #### Example payload
 
