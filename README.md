@@ -35,12 +35,12 @@ X-API-Key: <YOUR_API_KEY>
 
 ## Add post Example
 
-#### Description
+### Description
 Add Post API allows to create new post on specific channel
 
 **POST** `https://api.zira.us/public/post`
 
-#### Example payload
+### Example payload
 
 ```json
 {
@@ -51,7 +51,7 @@ Add Post API allows to create new post on specific channel
 
 ```
 
-#### Properties
+### Properties
 
 | Property    | Required | Type   | Example                | Description                             |
 | ----------- | -------- | ------ | ---------------------- | --------------------------------------- |
