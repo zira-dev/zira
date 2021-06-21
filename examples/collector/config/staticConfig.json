@@ -1,0 +1,12 @@
+{
+  "urls":{
+    "newPost":    "https://api.zira.us/public/post",
+    "addReading": "https://api.zira.us/public/reading/named/",
+    "downloadCsv": "https://api.zira.us/public/export",
+    "readings": "https://api.zira.us/public/reading",
+    "channelAnalysis": "https://api.zira.us/public/system/analysis",
+    "dataSources": "https://api.zira.us/public/data-sources",
+    "posts":    "https://api.zira.us/public/posts"
+  } 
+
+}

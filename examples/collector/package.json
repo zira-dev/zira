@@ -1,0 +1,14 @@
+{
+  "name": "collector",
+  "version": "1.0.0",
+  "description": "this is a template to create a new collector",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
